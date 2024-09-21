@@ -1,0 +1,7 @@
+#!/bin/sh
+
+curl -i \
+  -X POST \
+  -H "Content-Type: multipart/form-data" \
+  -F "data=@test.mp3" \
+  http://mysuperserver/media/1234/upload
