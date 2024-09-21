@@ -1,2 +1,3 @@
-# expenses-app
-App for analyzing expenses
+# expense-tracker
+
+A web app to track expenses, revenues, and budget.
