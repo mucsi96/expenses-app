@@ -25,7 +25,7 @@ public class UploadService {
 
     public Optional<CSVType> detectCSVType(MultipartFile file) {
         CSVFormat csvFormat = CSVFormat.EXCEL.builder().setDelimiter(";").build();
-        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream(), "ASCII"));
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream(), "UTF-8"));
                 CSVParser csvParser = new CSVParser(bufferedReader, csvFormat);) {
 
             if (csvParser.getRecords().stream().map(record -> String.join(";", record.values()))
@@ -47,7 +47,8 @@ public class UploadService {
 
     public List<CardStatement> parseCardStatement(MultipartFile file) {
         CSVFormat csvFormat = CSVFormat.EXCEL.builder().setDelimiter(";").build();
-        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream(), "ASCII"));
+        try (BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(file.getInputStream(), "ISO-8859-1"));
                 CSVParser csvParser = new CSVParser(bufferedReader, csvFormat);) {
 
             return csvParser.getRecords().stream()
