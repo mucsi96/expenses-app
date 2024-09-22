@@ -1,5 +1,17 @@
 {
     "java.compile.nullAnalysis.mode": "automatic",
     "java.debug.settings.hotCodeReplace": "auto",
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 8482,
+            "driver": "PostgreSQL",
+            "name": "local",
+            "database": "expense_tracker",
+            "username": "postgres",
+            "password": "postgres"
+        }
+    ]
 }

@@ -1,15 +1,12 @@
 package io.github.mucsi96.expense_tracker.controller;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import io.github.mucsi96.expense_tracker.model.AccountStatement;
-import io.github.mucsi96.expense_tracker.model.CardStatement;
+import io.github.mucsi96.expense_tracker.service.ExpenseService;
 import io.github.mucsi96.expense_tracker.service.UploadService;
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class UploadController {
 
     private final UploadService uploadService;
+    private final ExpenseService expenseService;
 
     @PostMapping("/upload")
     public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) {
@@ -37,12 +35,10 @@ public class UploadController {
         uploadService.detectCSVType(file).ifPresentOrElse(type -> {
             switch (type) {
                 case ACCOUNT_STATEMENT:
-                    List<AccountStatement> accountStatements = uploadService.parseAccountStatement(file);
-                    accountStatements.forEach(System.out::println);
+                    expenseService.importAccountExpenses(uploadService.parseAccountStatement(file));
                     break;
                 case CARD_STATEMENT:
-                    List<CardStatement> cardStatements = uploadService.parseCardStatement(file);
-                    cardStatements.forEach(System.out::println);
+                    expenseService.importCardExpenses(uploadService.parseCardStatement(file));
                     break;
             }
         }, () -> ResponseEntity.badRequest().body("Unsupported CSV header"));

@@ -1,11 +1,13 @@
 package io.github.mucsi96.expense_tracker.converter;
 
+import java.time.ZoneId;
 import java.util.Optional;
 
 import org.apache.commons.csv.CSVRecord;
 
 import io.github.mucsi96.expense_tracker.enums.CSVType;
 import io.github.mucsi96.expense_tracker.model.AccountStatement;
+import io.github.mucsi96.expense_tracker.model.Expense;
 import io.github.mucsi96.expense_tracker.util.ConvertUtils;
 
 public class AccountStatementConverter {
@@ -35,5 +37,20 @@ public class AccountStatementConverter {
         } catch (Exception e) {
             return Optional.empty();
         }
+    }
+
+    public static Expense toExpense(AccountStatement accountStatement) {
+        return Expense.builder()
+                .date(accountStatement.getTradeDate()
+                        .map(date -> date.atStartOfDay(ZoneId.of("Europe/Zurich")).toInstant())
+                        .orElse(null))
+                .description(accountStatement.getDescription1())
+                .location("") // Assuming no direct mapping
+                .category("") // Assuming no direct mapping
+                .amount(accountStatement.getIndividualAmount().orElse(null))
+                .currency(accountStatement.getCurrency())
+                .method("Direct payment") // Assuming no direct mapping
+                .comment(accountStatement.getDescription2())
+                .build();
     }
 }
