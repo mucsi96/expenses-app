@@ -1,0 +1,16 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run Docker Compose",
+      "type": "shell",
+      "command": "docker compose up",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "detail": "Runs the Docker Compose configuration defined in docker-compose.yaml"
+    }
+  ]
+}

@@ -3,5 +3,12 @@
 curl -i \
   -X POST \
   -H "Content-Type: multipart/form-data" \
-  -F "data=@test.mp3" \
-  http://mysuperserver/media/1234/upload
+  -F "file=@card-transactions.csv" \
+  http://localhost:8080/upload
+
+
+curl -i \
+  -X POST \
+  -H "Content-Type: multipart/form-data" \
+  -F "file=@personal-transactions.csv" \
+  http://localhost:8080/upload
