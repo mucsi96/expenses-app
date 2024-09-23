@@ -1,6 +1,7 @@
 package io.github.mucsi96.expense_tracker.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
@@ -19,12 +20,22 @@ public class ExpenseService {
 
     public void importAccountExpenses(List<AccountStatement> accountStatements) {
         List<Expense> expenses = accountStatements.stream().map(AccountStatementConverter::toExpense).toList();
-        expenseRepository.saveAll(expenses);
+        List<Expense> existingExpenses = expenseRepository.findAll();
+        List<Expense> newExpenses = expenses.stream()
+                .filter(expense -> existingExpenses.stream()
+                        .noneMatch(existingExpense -> Objects.equals(existingExpense, expense)))
+                .toList();
+        expenseRepository.saveAll(newExpenses);
     }
 
     public void importCardExpenses(List<CardStatement> cardStatements) {
         List<Expense> expenses = cardStatements.stream().map(CardStatementConverter::toExpense).toList();
-        expenseRepository.saveAll(expenses);
+        List<Expense> existingExpenses = expenseRepository.findAll();
+        List<Expense> newExpenses = expenses.stream()
+                .filter(expense -> existingExpenses.stream()
+                        .noneMatch(existingExpense -> Objects.equals(existingExpense, expense)))
+                .toList();
+        expenseRepository.saveAll(newExpenses);
     }
 
     public List<Expense> getExpenses() {
