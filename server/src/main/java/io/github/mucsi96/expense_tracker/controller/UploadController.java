@@ -3,6 +3,7 @@ package io.github.mucsi96.expense_tracker.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,12 +13,13 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping(produces = "application/json")
 public class UploadController {
 
     private final UploadService uploadService;
     private final ExpenseService expenseService;
 
-    @PostMapping("/upload")
+    @PostMapping("/api/upload")
     public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().body("Please select a file to upload");
