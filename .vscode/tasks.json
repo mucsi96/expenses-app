@@ -4,7 +4,7 @@
     {
       "label": "Run Docker Compose",
       "type": "shell",
-      "command": "docker compose up",
+      "command": "docker compose up --build --force-recreate --wait --remove-orphans --pull always",
       "group": {
         "kind": "build",
         "isDefault": true
