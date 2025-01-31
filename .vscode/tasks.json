@@ -11,6 +11,28 @@
       },
       "problemMatcher": [],
       "detail": "Runs the Docker Compose configuration defined in docker-compose.yaml"
+    },
+    {
+      "type": "npm",
+      "script": "start",
+      "isBackground": true,
+      "label": "client: start",
+      "options": {
+        "cwd": "${workspaceFolder}/client"
+      },
+      "problemMatcher": {
+        "owner": "typescript",
+        "pattern": "$tsc",
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": {
+            "regexp": "(.*?)"
+          },
+          "endsPattern": {
+            "regexp": "bundle generation complete"
+          }
+        }
+      }
     }
   ]
 }
